@@ -28,7 +28,7 @@ export const App = () => {
     ...goodsFromServer,
   ]);
   const [field, setField] = useState<string | null>(null);
-  const [reversed, setReversed] = useState<boolean | string>(false);
+  const [reversed, setReversed] = useState<boolean>(false);
 
   function sortingGoods(fieldValue: string) {
     const sortedGoods = [...currentGoods];
@@ -88,7 +88,7 @@ export const App = () => {
         <button
           type="button"
           className={cs('button is-warning', {
-            'is-light': reversed !== true,
+            'is-light': reversed === false,
           })}
           onClick={() => {
             if (reversed === false) {
@@ -108,9 +108,9 @@ export const App = () => {
             type="button"
             className={cs('button is-danger', 'is-light')}
             onClick={() => {
-              setReversed('');
+              setReversed(false);
               setCurrentGoods([...goodsFromServer]);
-              setField('');
+              setField(null);
             }}
           >
             Reset
@@ -119,9 +119,9 @@ export const App = () => {
       </div>
 
       <ul>
-        {currentGoods.map((good, index) => (
+        {currentGoods.map(good => (
           // eslint-disable-next-line react/no-array-index-key
-          <li key={index} data-cy="Good">
+          <li key={good} data-cy="Good">
             {good}
           </li>
         ))}
